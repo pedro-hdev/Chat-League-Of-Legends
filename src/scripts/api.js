@@ -13,8 +13,8 @@ const apiService = {
     const route = routes.ask.replace("{id}", id);
 
     const options = {
-      method: "post",
-      header: {
+      method: "POST",
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -38,14 +38,10 @@ const state = {
   },
 };
 async function main() {
-  //1. chamada pra api do pedro
-  //2. guardar dados de personagens
-  //3. carregar personagens na tela
   //4. resetar a tela
   await loadChampions();
   await renderChampions();
   await loadCarrousel();
-  
 }
 async function loadChampions() {
   const data = await apiService.getChampions();
@@ -54,8 +50,9 @@ async function loadChampions() {
 
 async function renderChampions() {
   const championsData = state.value.champions;
-  const elements = championsData.map((character) => 
-    `<div class="timeline-carousel__item">
+  const elements = championsData.map(
+    (character) =>
+      `<div class="timeline-carousel__item" onclick= "onChangeChampionSelected(${character.id},'${character.imageUrl}')">
   <div class="timeline-carousel__image">
     <div class="media-wrapper media-wrapper--overlay"
       style="background: url('${character.imageUrl}') center center; background-size:cover;">
@@ -68,8 +65,50 @@ async function renderChampions() {
   </div>
  </div>`
   );
-  console.log(elements)
+
   state.views.carousel.innerHTML = elements.join(" ");
+}
+async function onChangeChampionSelected(id, imageUrl) {
+  state.views.avatar.style.backgroundImage = `url(${imageUrl})`;
+
+  state.views.avatar.dataset.id = id;
+
+  state.views.question.placeholder = "Pergunte-me algo";
+
+  await resetForm();
+}
+async function resetForm() {
+  state.views.question.value = "";
+
+  state.views.response.textContent = await getRandomQuote();
+}
+
+async function getRandomQuote() {
+  const quotes = [
+    "Manda ver meu nobre",
+    "Pode vir quente que eu to fervendo",
+    "Aguardo sua pergunta",
+    "Espero anciosamente pela sua pergunta",
+    "Estou começando a fica com tédio....",
+    "Tenha vidas a salvar, vá depressa com isso",
+    "Pedro é tão bonitãooo",
+    "Bruno não sai do bronze",
+    "Não vai ficar ai o dia todo vai?",
+    "Talvez seja melhor ir jogar Dota....",
+    "Ainda to tentando entender como essa giringoça funciona",
+    "Vamo que vamo meu chapa",
+  ];
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  return quotes[randomIndex];
+}
+
+async function fetchAskChampion() {
+  document.body.style.cursor = "wait";
+  const id = state.views.avatar.dataset.id;
+  const message = state.views.question.value;
+  const response = await apiService.postAskChampion(id, message);
+  state.views.response.textContent = response.answer;
+  document.body.style.cursor = "default";
 }
 
 async function loadCarrousel() {
