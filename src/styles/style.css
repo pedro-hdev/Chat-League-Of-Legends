@@ -254,6 +254,7 @@ body {
 }
 .slick-prev .btn,
 .slick-next .btn {
+  
   border-radius: 0;
   font-family: "Libre Franklin", sans-serif;
   font-size: 12px;
@@ -325,7 +326,7 @@ body {
   height: 10rem;
   width: 10rem;
   border-radius: 50%;
-  background-image: url("https://via.placeholder.com/550x320/171717/cccccc?text=550x320");
+  background-image: url("https://i.scdn.co/image/ab6761610000e5ebe80d1ffb81aa6503ad41c574");
   background-size: cover;
   background-position: top;
 }
