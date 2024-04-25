@@ -112,19 +112,19 @@
 
   <!-- main banner -->
   <section class="container d-flex flex-column justify-content-center align-items-center d-flex section-header">
-
+     
 
     <div class="avatar-box">
-      <div id="avatar" data-id="1" class="big-picture w-80 wiggle"></div>
+      <div id="avatar" data-id="0" class="big-picture w-80 wiggle "></div>
 
 
-      <p class="text-reponse"></p>
+      <p class="text-reponse">Converse com os campeões de League of Legends - Desenvolvido por Pedro Gostoso</p>
 
 
       <div class="input-group mb-3 mt-3" style="position: absolute; bottom:0; width: 40rem;">
         <input id="text-request" style="background-color: #D1D1D1;" type="text" class="form-control"
-          placeholder="Pergunte-me algo" aria-label="Pergunte-me Algo" aria-describedby="btn-get-api">
-        <button class="btn btn-outline-secondary" type="button" id="btn-get-api">
+          placeholder="Selecione um campeão invocador" aria-label="" aria-describedby="btn-get-api">
+        <button class="btn btn-outline-secondary" type="button" id="btn-get-api" onclick="fetchAskChampion()">
           Perguntar
         </button>
       </div>
